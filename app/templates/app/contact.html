@@ -1,0 +1,19 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron jumbotron-sm d-flex align-items-center justify-content-center position-relative">
+    <div class="container text-center position-relative">
+        <h1 class="text-white">{{ title }}</h1>
+        <p  class="text-white mb-0">{{ message }}</p>
+    </div>
+</div>
+<div class="container">
+    <div class="py-4 py-md-5">
+        <address>
+            <strong>Support:</strong>   <a href="mailto:Support@FeedMeSeattle.com">Support@FeedMeSeattle.com</a><br />
+        </address>
+    </div>
+</div>
+
+{% endblock %}
