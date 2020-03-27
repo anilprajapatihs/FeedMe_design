@@ -291,6 +291,37 @@ input[type="checkbox"].input-validation-error {
 .bs-tooltip-auto[x-placement^=right] .arrow::before {
     border-right-color: #d9dde0;
 }
+/* Alerts */
+.alert {
+    padding: 17px 55px;
+}
+.alert .close {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    background: url(../images/close-ic.svg) no-repeat 0 0 / contain;
+    width: 18px;
+    height: 18px;
+    opacity: 1;
+    padding: 0;
+    margin-top: -9px;
+}
+.alert .close:focus {
+    outline: none;
+    box-shadow: none;
+}
+.alert.alert-success {
+    background: #39DA8A url(../images/success-ic.svg) no-repeat 20px center / 22px;
+    color: #FFF!important;
+    box-shadow: 0 3px 8px 0 rgba(57,218,138,.4);
+    border: none;
+}
+.alert.alert-primary {
+    background: #5A8DEE url(../images/success-ic.svg) no-repeat 20px center / 22px;
+    color: #FFF!important;
+    box-shadow: 0 3px 8px 0 rgba(90,141,238,.4);
+    border: none;
+}
 @media only screen and (max-width:991px){
     .container {
         max-width: 100%;

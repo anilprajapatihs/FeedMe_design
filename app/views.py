@@ -13,13 +13,15 @@ from datetime import datetime
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
+from app.forms import SubmitRestaurantForm
+from app.models import Restaurant
 
 class IndexView(generic.ListView):
 	template_name = 'app/index.html'
 	context_object_name = 'restaurant_list'
 
 	def get_queryset(self):
-		return m.Restaurant.objects.all()
+		return m.Restaurant.objects.filter(isLive=True)
 
 class ViewRestaurantDetails(generic.DetailView):
 	model = m.Restaurant
@@ -75,12 +77,31 @@ def about(request):
     )
 
 def submitRestaurant(request):
-    """Renders the about page."""
-    assert isinstance(request, HttpRequest)
-    return render(
+	if request.method == 'POST':
+		restaurant = m.Restaurant()
+		restaurant.name = request.POST['restaurant-name']
+		restaurant.address = request.POST['restaurant-address']
+		if Restaurant.objects.filter(name=restaurant.name):
+			return render(
+				request,
+				'app/submitError.html',
+				{
+					'title' : ' Restaurant already submitted',
+					'message' : 'This restaurant has already been submitted!'
+					}
+				)
+		else:
+			restaurant.save()
+			return HttpResponseRedirect('/thanks/')
+		form = SubmitRestaurantForm(data=request.POST)
+
+	else:
+		form = SubmitRestaurantForm()
+	return render(
         request,
         'app/submitRestaurant.html',
-        {
+        {	
+			'form':form,
             'title':'Submit Restaurant',
             'message':'Keeping our local small businesses alive',
             'year':datetime.now().year,
@@ -92,7 +113,7 @@ def submitRestaurant(request):
 def restaurant_list(request):
 	
 	if request.method == 'GET':
-		restaurants = m.Restaurant.objects.all()
+		restaurants = m.Restaurant.objects.filter(isLive=True)
 		serializer = RestaurantSerializer(restaurants,many=True)
 		return JsonResponse(serializer.data, safe=False)
 		
